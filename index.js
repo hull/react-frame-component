@@ -5,8 +5,11 @@ var Frame = React.createClass({
     style: React.PropTypes.object,
     head:  React.PropTypes.node
   },
-  render: function() {
-    return React.createElement('iframe', this.props);
+  render: function () {
+    // Memoize the frame to avoid breaking virtual tree when re-rendering it
+    // Works as long as you don't update the props for this frame.
+    if(!this.frame){this.frame = React.createElement('iframe', this.props);}
+    return this.frame;
   },
   componentDidMount: function() {
     this.renderFrameContents();
